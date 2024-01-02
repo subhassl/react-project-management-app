@@ -1,7 +1,12 @@
 import React from "react";
 import { Button } from "./Button";
 
-export const ProjectSidebar = ({ onStartAddProject }) => {
+export const ProjectSidebar = ({
+  onStartAddProject,
+  projects,
+  onSelectProject,
+  selectedProjectId,
+}) => {
   return (
     <aside className="w-1/3 px-8 py-16 bg-stone-900 text-white md:w-72 rounded-r-xl">
       <h2 className="mb-8 font-bold uppercase md:text-xl text-stone-200">
@@ -11,7 +16,27 @@ export const ProjectSidebar = ({ onStartAddProject }) => {
       <div>
         <Button onClick={onStartAddProject}>+ Add Project</Button>
       </div>
-      <ul></ul>
+      <ul className="mt-8">
+        {projects.map((project) => {
+          let cssClass =
+            "w-full text-left px-2 py-1 rounded-sm my-1 text-stone400 hover:text-stone-200 hover:bg-stone-800";
+          if (project.id === selectedProjectId) {
+            cssClass += " bg-stone-800";
+          } else {
+            cssClass += " bg-stone-900";
+          }
+          return (
+            <li key={project.id}>
+              <button
+                className={cssClass}
+                onClick={() => onSelectProject(project.id)}
+              >
+                {project.title}
+              </button>
+            </li>
+          );
+        })}
+      </ul>
     </aside>
   );
 };
